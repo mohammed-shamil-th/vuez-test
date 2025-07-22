@@ -1,15 +1,22 @@
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.product-card{
-    background-color: bisque;
-    height: 430px;
-    width: 500px;
+body {
+  @apply font-poppins;
 }
-.product-card-header{
-    background-color: #f0f0f0;
-    padding: 10px;
-    font-size: 2rem;
-    font-weight: bold;
+
+.product-card {
+  background-color: bisque;
+  height: 430px;
+  width: 500px;
+}
+
+.product-card-header {
+  background: linear-gradient(90deg, #5B2A7C 0%, #431B5A 100%);
+  /* position: absolute; */
+  /* z-index: 1; */
+  width: 100%;
 }

@@ -1,5 +1,5 @@
 import './App.css';
-import ProductSection from './components/common/app/products/ProductsSection';
+import ProductSection from './app/products/ProductsSection';
 import HeaderLayout from './components/common/HeaderLayout';
 
 function App() {
