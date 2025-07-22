@@ -1,4 +1,5 @@
 import React from 'react'
+import ProductCardFooter from './ProductCardFooter'
 
 export default function ProductCardContent() {
     return (
@@ -17,18 +18,7 @@ export default function ProductCardContent() {
                     className="w-[170px]"
                 />
             </div>
-            <div className='h-20 text-white '>
-                <div
-                    style={{
-                        border: "0.74px solid",
-                        borderImageSource:
-                            "linear-gradient(90deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.0184) 100%)",
-                        borderImageSlice: 1,
-                    }}
-                >
-                </div>
-                <h6>USD</h6>
-            </div>
+           <ProductCardFooter />
         </div>
     )
 }
