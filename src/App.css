@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.product-card{
+    background-color: bisque;
+    height: 430px;
+    width: 500px;
+}
+.product-card-header{
+    background-color: #f0f0f0;
+    padding: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+}
