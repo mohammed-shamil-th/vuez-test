@@ -15,8 +15,7 @@ body {
 }
 
 .product-card-header {
-  background: linear-gradient(90deg, #5B2A7C 0%, #431B5A 100%);
-  /* position: absolute; */
-  /* z-index: 1; */
   width: 100%;
+  box-shadow: 2px 2px 3px 0px #00000080;
 }
+
