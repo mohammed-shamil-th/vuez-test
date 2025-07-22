@@ -11,11 +11,10 @@ body {
 .product-card {
   background-color: bisque;
   height: 430px;
-  width: 500px;
+  max-width: 500px;
 }
 
 .product-card-header {
   width: 100%;
   box-shadow: 2px 2px 3px 0px #00000080;
 }
-
