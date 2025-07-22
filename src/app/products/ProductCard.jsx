@@ -17,7 +17,7 @@ export default function ProductCard({ product ,index}) {
                 }}
             >
                 <ProductCardHeader product={product} />
-                <ProductCardContent index={index} />
+                <ProductCardContent index={index} product={product} />
                 <Round position='left' />
                 <Round position='right' />
 
