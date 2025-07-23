@@ -4,7 +4,7 @@ import Sidebox from './sidebar/Sidebox';
 import ProgressBar from './ProgressBar';
 import FormHeader from './form/FormHeader';
 import TextBox from '../../components/common/TextBox';
-import ProductANdServices from './form/ProductAndServices';
+import ProductAndServices from './form/ProductAndServices';
 import SelectBox from '../../components/common/SelectBox';
 import FormButton from '../../components/common/FormButton';
 
@@ -123,10 +123,7 @@ export default function RegistationPage() {
                 <SelectBox label="Industry"
                   required={true} />
               </div>
-
-              <ProductANdServices handleWorkshopChange={handleWorkshopChange} />
-
-
+              <ProductAndServices handleWorkshopChange={handleWorkshopChange} />
             </div>
           </div>
 
