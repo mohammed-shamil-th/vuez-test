@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function ProductFooter() {
+      const navigate = useNavigate();
     return (
         <div className="h-[120px] bg-gradient-to-r from-[#299D3F] to-[#123F22] flex items-center justify-end gap-20 px-4 sm:px-8 lg:px-20">
 
@@ -16,7 +18,7 @@ export default function ProductFooter() {
             </div>
             
             <div>
-                <button className="bg-white text-gray-800 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors">
+                <button className="bg-white text-gray-800 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors" onClick={() => navigate('/registration')}>
                     Buy Now
                 </button>
             </div>
