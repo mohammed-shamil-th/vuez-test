@@ -1,5 +1,8 @@
 import { useState } from "react";
 import FormHeader from "../form/FormHeader";
+import AppliedTicket from "./AppliedTicket";
+import TotalSection from "./TotalSection";
+import PromoCodeApplied from "./PromocodeApplied";
 
 const tickets = [
     {
@@ -12,40 +15,42 @@ const tickets = [
     },
 ]
 export default function RegistrationSummary() {
-    const [promoCode, setPromoCode] = useState("");
+    const [promoCode, setPromoCode] = useState("GITEX");
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [marketingConsent, setMarketingConsent] = useState(false);
+    const [promoCodeApplied, setPromoCodeApplied] = useState(true);
 
     const handleApplyPromo = () => {
-        // Handle promo code application
-        console.log("Applying promo code:", promoCode);
+        if (promoCode?.trim().length > 0) {
+            setPromoCodeApplied(true);
+        }
+    };
+
+    const handleRemovePromo = () => {
+        setPromoCodeApplied(false);
+        setPromoCode("");
     };
     return (
-        <div className="max-w-6xl mx-auto px-4 py-4 bg-white rounded-md shadow-md">
-            {/* Registration Summary Header */}
+        <div className="max-w-6xl mx-auto px-4 py-4 bg-white rounded-md shadow-md font-alexandria ">
             <div className="mb-4">
                 <FormHeader title="Registration Summary" subtitle={null} style={{ borderRadius: "0.5rem" }} />
             </div>
-            {/* Content */}
             <div className="">
-                {/* Ticket Items */}
                 <div className="space-y-4 mb-8">
-                    {tickets?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200">
-                        <div>
-                            <h3 className="font-semibold text-gray-900">{ticket?.name}</h3>
-                        </div>
-                        <div className="text-right">
-                            <span className="font-semibold text-gray-900">{ticket.price}</span>
-                        </div>
-                    </div>))}
-
-
+                    {promoCodeApplied ?
+                        <AppliedTicket />
+                        : tickets?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200">
+                            <div>
+                                <h3 className="font-semibold text-gray-900">{ticket?.name}</h3>
+                            </div>
+                            <div className="text-right">
+                                <span className="font-semibold text-gray-900">{ticket.price}</span>
+                            </div>
+                        </div>))}
                 </div>
-
-                {/* Promo Code Section */}
                 <div className="mb-8">
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                        <h3 className="font-medium text-green-700 mb-3">Have a promo code?</h3>
+                        {promoCodeApplied ? <h3 className="font-bold text-black-700 mb-3">Have a promo code?</h3> : <h3 className="font-medium text-green-700 mb-3">Have a promo code?</h3>}
                         <div className="flex gap-3">
                             <input
                                 type="text"
@@ -53,26 +58,32 @@ export default function RegistrationSummary() {
                                 value={promoCode}
                                 onChange={(e) => setPromoCode(e.target.value)}
                                 className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent placeholder-gray-400"
-                            />
+                                disabled={promoCodeApplied} />
                             <button
                                 onClick={handleApplyPromo}
                                 className="bg-gradient-to-r from-[#AB0202] to-[#240102] text-white px-4 py-1 rounded text-sm font-bold"
+                                disabled={promoCodeApplied}
                             >
                                 APPLY
                             </button>
                         </div>
+                        {promoCodeApplied && <> <p className="font-normal text-[0.9rem] leading-[25.78px] text-[#198754] my-2">Promo code "{promoCode}" applied successfully! Applied to 2 lowest-priced tickets!</p>
+                            <PromoCodeApplied promoCode={promoCode} handleRemovePromo={handleRemovePromo} /></>}
                     </div>
                 </div>
+                {promoCodeApplied &&
+                    <div className="space-y-4 mb-8">
 
-                {/* Total */}
-                <div className="flex justify-end mb-8">
-                    <div className="flex items-center gap-2 text-right">
-                        <div className="text-2xl font-bold text-gray-900">Total: EUR 300</div>
-                        <div className="text-sm text-gray-600">Incl. 19% VAT</div>
-                    </div>
-                </div>
-
-                {/* Terms and Conditions */}
+                        {tickets?.slice(1)?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200">
+                            <div>
+                                <h3 className="font-semibold text-gray-900">{ticket?.name}</h3>
+                            </div>
+                            <div className="text-right">
+                                <span className="font-semibold text-gray-900">{ticket.price}</span>
+                            </div>
+                        </div>))}
+                    </div>}
+                <TotalSection promocodeCodeApplied={promoCodeApplied} />
                 <div className="space-y-4 mb-8">
                     <div className="flex items-start gap-3">
                         <input
