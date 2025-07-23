@@ -5,7 +5,7 @@ import FormComponent from './form/FormComponent';
 import RegistrationSummary from './summary/RegistrationSummary';
 
 export default function RegistationPage() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(4);
 
   const handleNext = () => {
     if (step < 4) {
