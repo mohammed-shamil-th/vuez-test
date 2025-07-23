@@ -4,7 +4,7 @@ import Sidebox from './sidebar/Sidebox';
 import ProgressBar from './ProgressBar';
 import FormHeader from './form/FormHeader';
 import TextBox from '../../components/common/TextBox';
-import ProductANdServices from './form/ProductANdServices';
+import ProductANdServices from './form/ProductAndServices';
 import SelectBox from '../../components/common/SelectBox';
 import FormButton from '../../components/common/FormButton';
 
@@ -53,7 +53,7 @@ export default function RegistationPage() {
               <div className="grid grid-cols-2 gap-6 mb-6">
 
                 <TextBox label="First name"
-                  name="FirstName"
+                  name="firstName"
                   handleInputChange={handleInputChange}
                   value={formData.firstName}
                   required={true}
@@ -90,14 +90,14 @@ export default function RegistationPage() {
                     Mobile number <span className="text-red-500">*</span>
                   </label>
                   <div className="flex">
-                    <div className="flex items-center px-3 py-2 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
+                    <div className="flex items-center px-3 py-2 border border-gray-300 rounded-md bg-gray-50 mr-2">
                       <span className="text-green-600 mr-1">🇳🇬</span>
                       <span className="text-sm">+234</span>
                       <ChevronDownIcon className="h-4 w-4 text-gray-400 ml-1" />
                     </div>
                     <input
                       type="tel"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       value={formData.mobile}
                       onChange={(e) => handleInputChange('mobile', e.target.value)}
                     />
