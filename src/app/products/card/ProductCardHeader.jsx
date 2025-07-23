@@ -5,7 +5,7 @@ export default function ProductCardHeader({ product }) {
     return (
         <div className="product-card-header uppercase flex flex-col gap-2 px-8 py-6 relative" style={{paddingLeft: product?.badge && '100px' ,background:`${product?.headerBg}`}}>
             
-            <h4 className="font-semibold text-[1.5rem] leading-[1] tracking-normal" style={{ color: ' #FFFFFF' }}>
+            <h4 className="font-semibold text-[1.4rem] leading-[1] tracking-normal" style={{ color: ' #FFFFFF' }}>
                 {product?.title}
             </h4>
             <h5

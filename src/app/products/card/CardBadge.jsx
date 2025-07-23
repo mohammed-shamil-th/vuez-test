@@ -14,7 +14,7 @@ export default function CardBadge({badge}) {
                 }}
             >
                 <span
-                    className="absolute whitespace-nowrap text-[1.2rem] font-bold -rotate-45"
+                    className="absolute whitespace-nowrap text-[1.1rem] font-bold -rotate-45"
                     style={{
                         top: '30%',
                         left: '40%',

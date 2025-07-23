@@ -39,8 +39,8 @@ export default function RegistationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 p-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 p-4 font-alexandria">
+    <div className="max-w-[1600px] mx-auto">
 
         <ProgressBar />
         <div className="flex gap-6">
@@ -126,14 +126,15 @@ export default function RegistationPage() {
 
               <ProductANdServices handleWorkshopChange={handleWorkshopChange} />
 
-              <div className="flex justify-center mt-6">
-                <FormButton label="NEXT" />
-              </div>
+
             </div>
           </div>
 
           <Sidebox />
         </div>
+          <div className="flex justify-center mt-6">
+            <FormButton label="NEXT" />
+          </div>
       </div>
     </div>
   );

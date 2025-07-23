@@ -3,7 +3,7 @@ import React from 'react'
 export default function TextBox({ label, name, value, handleInputChange, required = false ,type = "text"}) {
     return (
         <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm text-gray-700 mb-2 font-light">
                 {label} {required ? <span className="text-red-500">*</span> : null}
             </label>
             <input
