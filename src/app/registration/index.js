@@ -3,16 +3,18 @@ import ProgressBar from './ProgressBar';
 import FormButton from '../../components/common/FormButton';
 import FormComponent from './form/FormComponent';
 import RegistrationSummary from './summary/RegistrationSummary';
+import { useNavigate } from 'react-router-dom';
 
 export default function RegistationPage() {
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(1);
+
+  const navigagte = useNavigate();
 
   const handleNext = () => {
     if (step < 4) {
       setStep(prev => prev + 1);
     } else {
-      // Handle form submission or final step logic here
-      console.log('Form submitted');
+     navigagte('/success');
     }
   };
 
@@ -25,7 +27,6 @@ export default function RegistationPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 p-4 font-alexandria">
       <div className="max-w-[1600px] mx-auto">
-
         <ProgressBar currentStep={step} />
         {step === 1 && <FormComponent />}
         {step === 2 && <FormComponent />}

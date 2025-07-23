@@ -15,10 +15,10 @@ const tickets = [
     },
 ]
 export default function RegistrationSummary() {
-    const [promoCode, setPromoCode] = useState("GITEX");
+    const [promoCode, setPromoCode] = useState("");
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [marketingConsent, setMarketingConsent] = useState(false);
-    const [promoCodeApplied, setPromoCodeApplied] = useState(true);
+    const [promoCodeApplied, setPromoCodeApplied] = useState(false);
 
     const handleApplyPromo = () => {
         if (promoCode?.trim().length > 0) {
