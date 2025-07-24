@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Sidebox() {
     return (
-        <div className="w-[480px]">
+        <div className="w-full lg:w-[480px] md:w-[320px] ">
             <div className="bg-gradient-to-r from-green-400 to-green-600 text-white p-4 rounded-t-lg"
                 style={{
                     backgroundImage: 'url(./image.png)',

@@ -38,11 +38,11 @@ export default function FormComponent() {
   };
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col items-center md:flex-row md:items-start gap-6">
       <div className="flex-1 bg-white rounded-lg shadow-lg overflow-hidden">
         <FormHeader />
         <div className="p-6">
-          <div className="grid grid-cols-2 gap-6 mb-6">
+          <div className="grid grid-cols lg:grid-cols-2 gap-6 mb-6">
             <TextBox label="First name"
               name="firstName"
               handleInputChange={handleInputChange}
