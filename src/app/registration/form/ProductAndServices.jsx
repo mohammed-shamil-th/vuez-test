@@ -9,7 +9,7 @@ export default function ProductAndServices({ handleWorkshopChange }) {
 
     return (
         <div className="border-t pt-6">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-wrap gap-3 items-center justify-between mb-4">
                 <label className="block text-sm font-medium text-gray-700">
                     What products & services are you interested in? <span className="text-red-500">*</span>
                 </label>
@@ -23,7 +23,7 @@ export default function ProductAndServices({ handleWorkshopChange }) {
                     Select Workshop <span className="text-gray-500">(Maximum 6 can Select)</span>
                 </h3>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-3">
                         {[
                             'Global Leaders Forum !NEW (3 Days)',

@@ -7,15 +7,15 @@ export default function PromoCodeApplied({ promoCode, handleRemovePromo }) {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center space-x-2">
-                            <span className="text-md font-bold text-gray-800">Promo code applied:</span>
+                            <span className="text-md font-bold text-gray-800 mr-2">Promo code applied:</span>
                             <span className="text-md font-bold text-green-600">{promoCode}</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                            <span className="text-md font-bold text-gray-800">Promo code applied:</span>
+                            <span className="text-md font-bold text-gray-800 mr-2">Promo code applied:</span>
                             <span className="text-md font-bold text-green-600">15% (EUR 0.06 incl. VAT)</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                            <span className="text-md font-bold text-gray-800">Applied to::</span>
+                            <span className="text-md font-bold text-gray-800 mr-2">Applied to:</span>
                             <span className="text-md font-bold text-green-600">2 lowest-priced tickets</span>
                         </div>
                     </div>
