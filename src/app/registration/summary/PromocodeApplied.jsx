@@ -4,7 +4,7 @@ export default function PromoCodeApplied({ promoCode, handleRemovePromo }) {
     return (
         <div className="">
             <div className="bg-white rounded-lg px-4 py-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center space-x-2">
                             <span className="text-md font-bold text-gray-800">Promo code applied:</span>
