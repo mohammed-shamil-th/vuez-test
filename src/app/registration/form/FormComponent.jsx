@@ -81,14 +81,14 @@ export default function FormComponent() {
                 Mobile number <span className="text-red-500">*</span>
               </label>
               <div className="flex">
-                <div className="flex items-center px-3 py-2 border border-gray-300 rounded-md bg-gray-50 mr-2">
+                <div className="flex items-center px-2 sm:px-3 py-2 border border-gray-300 rounded-md bg-gray-50 mr-2">
                   <span className="text-green-600 mr-1">🇳🇬</span>
                   <span className="text-sm">+234</span>
                   <ChevronDownIcon className="h-4 w-4 text-gray-400 ml-1" />
                 </div>
                 <input
                   type="tel"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   value={formData.mobile}
                   onChange={(e) => handleInputChange('mobile', e.target.value)}
                 />
