@@ -10,7 +10,8 @@ import Sidebox from '../sidebar/Sidebox';
 import { useBooking } from '../../../context/BookingContext';
 import FormFooterButtons from './FormFooterButtons';
 import ErrorWarning from '../../../components/common/ErrorWarning';
-import { companyTypes, countries, industries, regions } from '../../datas/selectOptions';
+import { companyTypes, countries, countryDialData, industries, regions } from '../../datas/selectOptions';
+import { getFlagEmoji } from '../../helper-functions/helper';
 
 // ✅ Validation Schema
 const validationSchema = Yup.object({
@@ -28,6 +29,7 @@ const validationSchema = Yup.object({
   country: Yup.string().required('Country is required'),
   companyType: Yup.string().required('Company type is required'),
   industry: Yup.string().required('Industry is required'),
+  mobileCountry: Yup.string().required('Mobile country code is required'),
 });
 
 export default function FormComponent({ attendee, step, handleNext, handlePrev }) {
@@ -48,6 +50,7 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
       companyType: attendee?.companyType || '',
       industry: attendee?.industry || '',
       workshops: attendee?.workshops || [],
+      mobileCountry: attendee?.mobileCountry || "+91",
     },
     validationSchema,
     enableReinitialize: true,
@@ -157,11 +160,18 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
                   Mobile number <span className="text-red-500">*</span>
                 </label>
                 <div className="flex">
-                  <div className="flex items-center px-2 sm:px-3 py-2 border border-gray-300 rounded-md bg-gray-50 mr-2">
-                    <span className="text-green-600 mr-1">🇳🇬</span>
-                    <span className="text-sm">+234</span>
-                    <ChevronDownIcon className="h-4 w-4 text-gray-400 ml-1" />
-                  </div>
+                  <select
+                    className='flex items-center px-2 sm:px-3 py-2 border border-gray-300 rounded-md bg-gray-50 mr-2'
+                    name="mobileCountry"
+                    value={formik.values.mobileCountry}
+                    onChange={e => formik.setFieldValue("mobileCountry", e.target.value)}
+                  >
+                    {countryDialData.map((c) => (
+                      <option key={c.iso} value={c.dialCode}>
+                        {getFlagEmoji(c.iso)} {c.dialCode}
+                      </option>
+                    ))}
+                  </select>
                   <input
                     type="tel"
                     name="mobile"
