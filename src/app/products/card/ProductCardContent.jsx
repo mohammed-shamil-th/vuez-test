@@ -26,8 +26,6 @@ export default function ProductCardContent({ index, product }) {
                     <CardChips product={product} />
                 )}
             </div>
-
-            {/* Footer stays pinned */}
             <ProductCardFooter product={product} />
         </div>
     );
