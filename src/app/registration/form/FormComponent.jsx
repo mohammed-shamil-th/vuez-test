@@ -72,10 +72,15 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
     },
   });
 
-  const handleWorkshopChange = (workshop, checked) => {
+  const handleWorkshopChange = (id, checked) => {
+    const existingWorkshops = formik.values.workshops || [];
+    if (existingWorkshops?.length >= 6 && checked) {
+      alert('You can select a maximum of 6 workshops.');
+      return;
+    }
     const newWorkshops = checked
-      ? [...formik.values.workshops, workshop]
-      : formik.values.workshops.filter((w) => w !== workshop);
+      ? [...existingWorkshops, id]
+      : existingWorkshops.filter((w) => w !== id);
     formik.setFieldValue('workshops', newWorkshops);
   };
 
@@ -236,6 +241,7 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
             <ProductAndServices
               handleWorkshopChange={handleWorkshopChange}
               selectedWorkshops={formik.values.workshops}
+              ticket={ticket}
             />
           </div>
         </div>
