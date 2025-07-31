@@ -4,7 +4,7 @@ import ProductCardHeader from './card/ProductCardHeader'
 import Round from '../../components/common/Round'
 import CardBadge from './card/CardBadge'
 
-export default function ProductCard({ product ,index}) {
+export default function ProductCard({ product, index }) {
     return (
         <div className='relative'>
             {product?.badge && <CardBadge badge={product?.badge} />}

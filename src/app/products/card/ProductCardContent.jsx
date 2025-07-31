@@ -1,8 +1,9 @@
-import React from 'react'
 import ProductCardFooter from './ProductCardFooter'
 import CardChips from './CardChips'
 
+
 export default function ProductCardContent({ index, product }) {
+
     return (
         <div className="h-full backdrop-blur-[5.89534330368042px] bg-[rgba(0,0,0,0.80)] flex-1 flex flex-col justify-between px-8 py-4">
             <div className='flex flex-col justify-center gap-4 px-2 py-6 max-h-[220px] overflow-y-scroll' style={{ scrollbarWidth: 'none' }}>
@@ -20,7 +21,7 @@ export default function ProductCardContent({ index, product }) {
                 /> :
                     <CardChips product={product} />}
             </div>
-            <ProductCardFooter index={index} />
+            <ProductCardFooter product={product} />
         </div>
     )
 }
