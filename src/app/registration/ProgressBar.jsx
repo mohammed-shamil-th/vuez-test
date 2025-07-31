@@ -1,8 +1,7 @@
 import React from 'react'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
-export default function ProgressBar({ currentStep }) {
-    const totalSteps = 4 // You can change this to support more steps
+export default function ProgressBar({ currentStep, totalSteps }) {
     const steps = Array.from({ length: totalSteps }, (_, i) => i + 1)
 
     const getStepStatus = (step) => {

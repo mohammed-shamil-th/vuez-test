@@ -3,22 +3,30 @@ import FormHeader from "../form/FormHeader";
 import AppliedTicket from "./AppliedTicket";
 import TotalSection from "./TotalSection";
 import PromoCodeApplied from "./PromocodeApplied";
+import { useBooking } from "../../../context/BookingContext";
+import { formatToOneDecimal } from "../../helper-functions/helper";
+import FormFooterButtons from "../form/FormFooterButtons";
+import { useNavigate } from "react-router-dom";
 
-const tickets = [
-    {
-        name: "PREMIUM TICKET x 2",
-        price: "EUR 40.19",
-    },
-    {
-        name: "Student Ticket Access On Day 3 Only",
-        price: "EUR 50.40 SUBJECT TO APPROVAL Incl. 19%",
-    },
-]
-export default function RegistrationSummary() {
+const defaultPercentage = 15; // Default percentage value
+function getPercentageValue(amount, percentage = defaultPercentage) {
+    if (typeof amount !== "number" || typeof percentage !== "number") {
+        throw new Error("Both amount and percentage must be numbers");
+    }
+    return (amount * percentage) / 100;
+}
+
+export default function RegistrationSummary({ tickets, handlePrev, step }) {
     const [promoCode, setPromoCode] = useState("");
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [marketingConsent, setMarketingConsent] = useState(false);
     const [promoCodeApplied, setPromoCodeApplied] = useState(false);
+
+    const { getTotal } = useBooking();
+    const totalAmount = getTotal();
+    const totalDiscount = getPercentageValue(totalAmount);
+
+    const navigagte = useNavigate();
 
     const handleApplyPromo = () => {
         if (promoCode?.trim().length > 0) {
@@ -30,21 +38,28 @@ export default function RegistrationSummary() {
         setPromoCodeApplied(false);
         setPromoCode("");
     };
+
+    const submitForm = () => {
+        navigagte('/success');
+
+    };
+
     return (
-        <div className="max-w-6xl mx-auto px-4 py-4 bg-white rounded-md shadow-md font-alexandria ">
+        <> <div className="max-w-6xl mx-auto px-4 py-4 bg-white rounded-md shadow-md font-alexandria ">
             <div className="mb-4">
                 <FormHeader title="Registration Summary" subtitle={null} style={{ borderRadius: "0.5rem" }} />
             </div>
             <div className="">
                 <div className="space-y-4 mb-8">
                     {promoCodeApplied ?
-                        <AppliedTicket />
-                        : tickets?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200">
+                        tickets?.map((ticket) => (
+                            <AppliedTicket key={ticket?.id} ticket={ticket} defaultPercentage={defaultPercentage} getPercentageValue={getPercentageValue} />))
+                        : tickets?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200" key={ticket?.id}>
                             <div>
-                                <h3 className="font-semibold text-gray-900">{ticket?.name}</h3>
+                                <h3 className="font-semibold text-gray-900">{ticket?.title}{ticket?.count > 1 ? " x " + ticket?.count : null}</h3>
                             </div>
                             <div className="text-right">
-                                <span className="font-semibold text-gray-900">{ticket.price}</span>
+                                <span className="font-semibold text-gray-900">EUR {formatToOneDecimal(ticket?.discountPrice * ticket?.count)}</span>
                             </div>
                         </div>))}
                 </div>
@@ -71,10 +86,10 @@ export default function RegistrationSummary() {
                             <PromoCodeApplied promoCode={promoCode} handleRemovePromo={handleRemovePromo} /></>}
                     </div>
                 </div>
-                {promoCodeApplied &&
+                {/* {promoCodeApplied &&
                     <div className="space-y-4 mb-8">
 
-                        {tickets?.slice(1)?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200">
+                        {tickets?.slice(1)?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200" key={ticket?.id}>
                             <div>
                                 <h3 className="font-semibold text-gray-900">{ticket?.name}</h3>
                             </div>
@@ -82,8 +97,8 @@ export default function RegistrationSummary() {
                                 <span className="font-semibold text-gray-900">{ticket.price}</span>
                             </div>
                         </div>))}
-                    </div>}
-                <TotalSection promocodeCodeApplied={promoCodeApplied} />
+                    </div>} */}
+                <TotalSection promocodeCodeApplied={promoCodeApplied} totalAmount={totalAmount} totalDiscount={totalDiscount} />
                 <div className="space-y-4 mb-8">
                     <div className="flex items-start gap-3">
                         <input
@@ -100,7 +115,6 @@ export default function RegistrationSummary() {
                             <span className="text-red-500">*</span>
                         </label>
                     </div>
-
                     <div className="flex items-start gap-3">
                         <input
                             type="checkbox"
@@ -117,5 +131,7 @@ export default function RegistrationSummary() {
                 </div>
             </div>
         </div>
+            <FormFooterButtons step={step} handleNext={submitForm} handlePrev={handlePrev} />
+        </>
     );
 }
