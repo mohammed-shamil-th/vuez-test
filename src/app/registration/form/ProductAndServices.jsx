@@ -3,12 +3,13 @@ import SolutionsProductsPopup from '../popups/SolutionsProductsPopup';
 import CategoriesComponent from './Categories';
 import { tickets } from '../../datas/tickets';
 
-export default function ProductAndServices({ selectedWorkshops, handleWorkshopChange, ticket }) {
+export default function ProductAndServices({ selectedWorkshops, handleWorkshopChange, ticket, formik }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [isApplied, setIsApplied] = useState(false);
 
     const currentTicket = tickets.find(t => t.id === ticket?.id);
+
     return (
         <div className="border-t pt-6">
             <div className="flex flex-wrap gap-3 items-center justify-between mb-4">
@@ -43,7 +44,15 @@ export default function ProductAndServices({ selectedWorkshops, handleWorkshopCh
                 </div>
             </div>
 
-            {isOpen && <SolutionsProductsPopup setIsApplied={setIsApplied} isOpen={isOpen} setIsOpen={setIsOpen} setSelectedOptions={setSelectedOptions} selectedOptions={selectedOptions} />}
+            {isOpen &&
+                <SolutionsProductsPopup
+                    currentTicket={currentTicket}
+                    setIsApplied={setIsApplied}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    setSelectedOptions={setSelectedOptions}
+                    selectedOptions={selectedOptions}
+                    formik={formik} />}
         </div>
     )
 }

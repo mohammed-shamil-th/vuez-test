@@ -53,8 +53,11 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
       jobTitle: attendee?.jobTitle || '',
       companyType: attendee?.companyType || '',
       industry: attendee?.industry || '',
-      workshops: attendee?.workshops || [],
       mobileCountry: attendee?.mobileCountry || "+91",
+      workshops: attendee?.workshops || [],
+      mainCategories: attendee?.mainCategories || [],
+      subCategories: attendee?.subCategories || [],
+      
     },
     validationSchema,
     enableReinitialize: true,
@@ -242,6 +245,7 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
               handleWorkshopChange={handleWorkshopChange}
               selectedWorkshops={formik.values.workshops}
               ticket={ticket}
+              formik={formik}
             />
           </div>
         </div>

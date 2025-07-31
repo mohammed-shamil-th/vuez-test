@@ -2,58 +2,44 @@ import { useEffect, useState } from "react";
 import PopupHeader from "./PopupHeader";
 import PopupFooter from "./PopupFooter";
 
-export default function SolutionsProductsPopup({ isOpen, setIsApplied, setIsOpen, selectedOptions, setSelectedOptions }) {
+export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsApplied, setIsOpen, selectedOptions, setSelectedOptions, formik }) {
   const [searchText, setSearchText] = useState("");
   const [isMain, setIsMain] = useState(true);
 
-  const options = [
-    { id: "global-leaders", label: "Global Leaders Forum !NEW (3 Days)", isNew: true },
-    { id: "gitex-main", label: "GITEX Main Stage" },
-    { id: "ai-robotics", label: "Artificial Intelligence & Robotics (15)", count: 15 },
-    { id: "future-health-1", label: "Future Health !NEW (2 Days)", isNew: true },
-    { id: "cybersecurity", label: "Cybersecurity (4 Days)", count: 4 },
-    { id: "future-health-2", label: "Future Health !NEW (2 Days)", isNew: true },
-    { id: "ai-everything", label: "AI Everything (4 Days)", count: 4 },
-    { id: "future-health-3", label: "Future Health !NEW (2 Days)", isNew: true }
-  ];
-
-  const subOptions = [
-    { id: "global-leaders", label: "Global Leaders Forum !NEW (3 Days)", isNew: true },
-    { id: "gitex-main", label: "GITEX Main Stage" },
-    { id: "ai-robotics", label: "Artificial Intelligence & Robotics (15)", count: 15 },
-    { id: "future-health-1", label: "Future Health !NEW (2 Days)", isNew: true },
-    { id: "cybersecurity", label: "Cybersecurity (4 Days)", count: 4 },
-    { id: "future-health-2", label: "Future Health !NEW (2 Days)", isNew: true },
-    { id: "ai-everything", label: "AI Everything (4 Days)", count: 4 },
-    { id: "future-health-3", label: "Future Health !NEW (2 Days)", isNew: true },
-    { id: "digital-cities", label: "Digital Cities (1 Day)", count: 1 },
-    { id: "edtech", label: "Edtech (1 Day)", count: 1 },
-    { id: "energy-transition", label: "Energy Transition (1 Day)", count: 1 },
-    { id: "intelligent-connectivity", label: "Intelligent Connectivity (1 Day)", count: 1 },
-    { id: "digital-finance", label: "Digital Finance (1 Day)", count: 1 },
-    { id: "future-mobility", label: "Future Mobility (1 Day)", count: 1 },
-  ]
-
-  const handleCheckboxChange = (option, checked) => {
-    if (isMain) {
-      setIsMain(false);
-      return setSelectedOptions([]);
+  const handleMainCategories = (id, checked) => {
+    const existingCategories = formik.values.mainCategories || [];
+    if (existingCategories?.length >= 2 && checked) {
+      alert('You can select a maximum of 2 main categories.');
+      return;
     }
-    if (checked) {
-      setSelectedOptions((prev) => [...prev, option]);
-    } else {
-      setSelectedOptions((prev) =>
-        prev.filter((selected) => selected.id !== option.id)
-      );
+    const newCategories = checked
+      ? [...existingCategories, id]
+      : existingCategories.filter((w) => w !== id);
+    formik.setFieldValue('mainCategories', newCategories);
+  };
+
+  const handleSubCategories = (id, checked) => {
+    const existingCategories = formik.values.subCategories || [];
+    if (existingCategories?.length >= 5 && checked) {
+      alert('You can select a maximum of 5 sub categories.');
+      return;
     }
+    const newCategories = checked
+      ? [...existingCategories, id]
+      : existingCategories.filter((w) => w !== id);
+    formik.setFieldValue('subCategories', newCategories);
   };
 
   const handleApply = () => {
-    if (selectedOptions.length === 0) {
+    if (formik.values.mainCategories.length === 0) {
       alert("Please select at least one option.");
       return;
     }
-    if (selectedOptions.length > 5) {
+    if (isMain) {
+      setIsMain(!isMain)
+      return;
+    }
+    if (formik.values.subCategories.length > 5) {
       alert("You can only select a maximum of 5 options.");
       return;
     }
@@ -69,10 +55,6 @@ export default function SolutionsProductsPopup({ isOpen, setIsApplied, setIsOpen
     setIsMain((prev) => !prev);
     setSelectedOptions([]);
   };
-
-  function isChecked(option) {
-    return selectedOptions.some(selected => selected?.id === option?.id);
-  }
 
   useEffect(() => {
     setSelectedOptions([]);
@@ -102,43 +84,37 @@ export default function SolutionsProductsPopup({ isOpen, setIsApplied, setIsOpen
           </div>
 
           {isMain ? <div className="max-h-72 overflow-y-auto">
-            {options.map((option) => (
+            {currentTicket?.mainCategory?.map((option) => (
               <label
                 key={option.id}
                 className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
               >
                 <input
                   type="checkbox"
-                  checked={isChecked(option)}
-                  onChange={(e) => handleCheckboxChange(option, e.target.checked)}
+                  checked={formik.values.mainCategories.includes(option.id)}
+                  onChange={(e) => handleMainCategories(option?.id, e.target.checked)}
                   className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                 />
                 <span className="text-gray-700 text-sm flex-1">
-                  {option.label}
-                  {option.count && (
-                    <span className="text-gray-500"> ({option.count})</span>
-                  )}
+                  {option.name}
                 </span>
               </label>
             ))}
           </div> :
             <div className="grid grid-cols-2 gap-x-6 max-h-72 overflow-y-auto">
-              {subOptions.map((option) => (
+              {currentTicket?.subCategory?.map((option) => (
                 <label
                   key={option.id}
                   className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
                 >
                   <input
                     type="checkbox"
-                    checked={isChecked(option)}
-                    onChange={(e) => handleCheckboxChange(option, e.target.checked)}
+                    checked={formik.values.subCategories.includes(option.id)}
+                    onChange={(e) => handleSubCategories(option?.id, e.target.checked)}
                     className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                   />
                   <span className="text-gray-700 text-sm flex-1">
-                    {option.label}
-                    {option.count && (
-                      <span className="text-gray-500"> ({option.count})</span>
-                    )}
+                    {option.name}
                   </span>
                 </label>
               ))}
