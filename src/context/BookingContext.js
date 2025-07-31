@@ -20,7 +20,7 @@ function reducer(state, action) {
                                 count: t.count + 1,
                                 attendees: [
                                     ...t.attendees,
-                                    { id: t.count + 1, name: "", email: "", mobile: "", workshops: [] }
+                                    { id: t.count + 1, ticketId: action.payload.id, email: "", mobile: "", workshops: [] }
                                 ]
                             }
                             : t
@@ -36,7 +36,7 @@ function reducer(state, action) {
                         title: action.payload.title,
                         discountPrice: action.payload.discountPrice,
                         count: 1,
-                        attendees: [{ id: 1, name: "", email: "", mobile: "", workshops: [] }],
+                        attendees: [{ id: 1, ticketId: action.payload.id, email: "", mobile: "", workshops: [] }],
                     },
                 ],
             };
@@ -68,13 +68,14 @@ function reducer(state, action) {
                             ...t,
                             attendees: t.attendees.map(a =>
                                 a.id === action.payload.attendeeId
-                                    ? { ...a, [action.payload.field]: action.payload.value }
+                                    ? { ...a, ...action.payload.values }
                                     : a
                             ),
                         }
                         : t
                 ),
             };
+
         }
 
         default:

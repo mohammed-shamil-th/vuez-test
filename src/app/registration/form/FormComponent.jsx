@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
@@ -10,7 +10,9 @@ import Sidebox from '../sidebar/Sidebox';
 import { useBooking } from '../../../context/BookingContext';
 import FormFooterButtons from './FormFooterButtons';
 import ErrorWarning from '../../../components/common/ErrorWarning';
+import { companyTypes, countries, industries, regions } from '../../datas/selectOptions';
 
+// ✅ Validation Schema
 const validationSchema = Yup.object({
   firstName: Yup.string().required('First name is required'),
   lastName: Yup.string().required('Last name is required'),
@@ -48,31 +50,37 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
       workshops: attendee?.workshops || [],
     },
     validationSchema,
-    onSubmit: values => {
-      console.log("first")
+    enableReinitialize: true,
+    onSubmit: (values) => {
       dispatch({
         type: 'updateAttendee',
-        payload: { ticketId: attendee.ticketId, attendeeId: attendee.id, field: null, value: values }
+        payload: {
+          ticketId: attendee.ticketId,
+          attendeeId: attendee.id,
+          values,
+        },
       });
+      formik.resetForm();
       handleNext();
     },
-    enableReinitialize: true,
   });
 
   const handleWorkshopChange = (workshop, checked) => {
     const newWorkshops = checked
       ? [...formik.values.workshops, workshop]
-      : formik.values.workshops.filter(w => w !== workshop);
+      : formik.values.workshops.filter((w) => w !== workshop);
     formik.setFieldValue('workshops', newWorkshops);
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form key={step} onSubmit={formik.handleSubmit}>
       <div className="flex flex-col items-center md:flex-row md:items-start gap-6">
         <div className="flex-1 bg-white rounded-lg shadow-lg overflow-hidden">
           <FormHeader step={step} />
           <div className="p-6">
             <div className="grid grid-cols lg:grid-cols-2 gap-6 mb-6">
+
+              {/* First Name */}
               <TextBox
                 label="First name"
                 name="firstName"
@@ -81,6 +89,8 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
                 error={formik.touched.firstName && formik.errors.firstName}
                 required
               />
+
+              {/* Last Name */}
               <TextBox
                 label="Last name"
                 name="lastName"
@@ -89,14 +99,28 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
                 error={formik.touched.lastName && formik.errors.lastName}
                 required
               />
+
+              {/* Country */}
               <SelectBox
                 label="Country of residence"
                 name="country"
+                value={formik.values.country}
+                options={countries}
                 onChange={value => formik.setFieldValue('country', value)}
                 error={formik.touched.country && formik.errors.country}
                 required
               />
-              <SelectBox label="Region" name="region" onChange={value => formik.setFieldValue('region', value)} />
+
+              {/* Region */}
+              <SelectBox
+                label="Region"
+                name="region"
+                value={formik.values.region}
+                options={regions}
+                onChange={value => formik.setFieldValue('region', value)}
+              />
+
+              {/* Email */}
               <TextBox
                 label="Email address"
                 name="email"
@@ -106,6 +130,8 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
                 error={formik.touched.email && formik.errors.email}
                 required
               />
+
+              {/* Confirm Email */}
               <TextBox
                 label="Confirm Email address"
                 name="confirmEmail"
@@ -115,9 +141,13 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
                 error={formik.touched.confirmEmail && formik.errors.confirmEmail}
                 required
               />
+
+              {/* Nationality */}
               <SelectBox
                 label="Nationality"
                 name="nationality"
+                value={formik.values.nationality}
+                options={countries}
                 onChange={value => formik.setFieldValue('nationality', value)}
               />
 
@@ -145,6 +175,7 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
                 )}
               </div>
 
+              {/* Company Name */}
               <TextBox
                 label="Company name"
                 name="companyName"
@@ -153,6 +184,8 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
                 error={formik.touched.companyName && formik.errors.companyName}
                 required
               />
+
+              {/* Job Title */}
               <TextBox
                 label="Job title"
                 name="jobTitle"
@@ -161,22 +194,31 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
                 error={formik.touched.jobTitle && formik.errors.jobTitle}
                 required
               />
+
+              {/* Company Type */}
               <SelectBox
                 label="Company type"
                 name="companyType"
+                value={formik.values.companyType}
+                options={companyTypes}
                 onChange={value => formik.setFieldValue('companyType', value)}
                 error={formik.touched.companyType && formik.errors.companyType}
                 required
               />
+
+              {/* Industry */}
               <SelectBox
                 label="Industry"
                 name="industry"
+                value={formik.values.industry}
+                options={industries}
                 onChange={value => formik.setFieldValue('industry', value)}
                 error={formik.touched.industry && formik.errors.industry}
                 required
               />
             </div>
 
+            {/* Workshops */}
             <ProductAndServices
               handleWorkshopChange={handleWorkshopChange}
               selectedWorkshops={formik.values.workshops}
@@ -185,6 +227,8 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
         </div>
         <Sidebox />
       </div>
+
+      {/* Footer Buttons */}
       <FormFooterButtons step={step} handleNext={formik.handleSubmit} handlePrev={handlePrev} />
     </form>
   );
