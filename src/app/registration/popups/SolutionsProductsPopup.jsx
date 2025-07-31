@@ -74,12 +74,13 @@ export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsOpe
 
   return (
     <div className="font-poppins fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-3xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+      <div className="bg-white rounded-3xl shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden">
+
         {/* Header */}
         <PopupHeader handleCancel={handleCancel} />
 
-        <div className="p-6">
-
+        {/* Scrollable Content */}
+        <div className="p-6 flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
           <div className="mb-6">
             <input
               type="text"
@@ -95,29 +96,29 @@ export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsOpe
             </p>
           </div>
 
-          {isMain ? <div className="max-h-72 overflow-y-auto">
-            {currentTicket?.mainCategory
-              ?.filter(option =>
-                option.name.toLowerCase().includes(searchText.toLowerCase())
-              )
-              .map((option) => (
-                <label
-                  key={option.id}
-                  className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
-                >
-                  <input
-                    type="checkbox"
-                    checked={formik.values.mainCategories.includes(option.id)}
-                    onChange={(e) => handleMainCategories(option?.id, e.target.checked)}
-                    className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
-                  />
-                  <span className="text-gray-700 text-sm flex-1">
-                    {option.name}
-                  </span>
-                </label>
-              ))}
-          </div> :
-            <div className="grid grid-cols-2 gap-x-6 max-h-72 overflow-y-auto">
+          {isMain ? (
+            <div className="space-y-2">
+              {currentTicket?.mainCategory
+                ?.filter(option =>
+                  option.name.toLowerCase().includes(searchText.toLowerCase())
+                )
+                .map((option) => (
+                  <label
+                    key={option.id}
+                    className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formik.values.mainCategories.includes(option.id)}
+                      onChange={(e) => handleMainCategories(option?.id, e.target.checked)}
+                      className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                    />
+                    <span className="text-gray-700 text-sm flex-1">{option.name}</span>
+                  </label>
+                ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-x-6 space-y-2">
               {currentTicket?.subCategory
                 ?.filter(option =>
                   option.name.toLowerCase().includes(searchText.toLowerCase())
@@ -133,19 +134,17 @@ export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsOpe
                       onChange={(e) => handleSubCategories(option?.id, e.target.checked)}
                       className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                     />
-                    <span className="text-gray-700 text-sm flex-1">
-                      {option.name}
-                    </span>
+                    <span className="text-gray-700 text-sm flex-1">{option.name}</span>
                   </label>
                 ))}
             </div>
-          }
+          )}
         </div>
 
-        {/* Footer */}
+        {/* Footer always visible */}
         <PopupFooter handleCancel={handleCancel} handleApply={handleApply} />
-
       </div>
     </div>
+
   );
 }
