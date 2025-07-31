@@ -1,7 +1,8 @@
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import React from 'react'
+import ErrorWarning from './ErrorWarning'
 
-export default function SelectBox({ label, required = false }) {
+export default function SelectBox({ label, required = false, error = "" }) {
     return (
         <div>
             <label className="block text-sm text-gray-700 mb-2 font-light">
@@ -13,6 +14,9 @@ export default function SelectBox({ label, required = false }) {
                 </select>
                 <ChevronDownIcon className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" />
             </div>
+            {error && (
+                <ErrorWarning error={error} />
+            )}
         </div>
     )
 }

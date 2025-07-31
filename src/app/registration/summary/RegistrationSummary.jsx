@@ -39,7 +39,7 @@ export default function RegistrationSummary() {
                 <div className="space-y-4 mb-8">
                     {promoCodeApplied ?
                         <AppliedTicket />
-                        : tickets?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200">
+                        : tickets?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200" key={ticket?.id}>
                             <div>
                                 <h3 className="font-semibold text-gray-900">{ticket?.name}</h3>
                             </div>
@@ -74,7 +74,7 @@ export default function RegistrationSummary() {
                 {promoCodeApplied &&
                     <div className="space-y-4 mb-8">
 
-                        {tickets?.slice(1)?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200">
+                        {tickets?.slice(1)?.map((ticket) => (<div className="flex justify-between items-center py-3 border-b border-gray-200" key={ticket?.id}>
                             <div>
                                 <h3 className="font-semibold text-gray-900">{ticket?.name}</h3>
                             </div>
