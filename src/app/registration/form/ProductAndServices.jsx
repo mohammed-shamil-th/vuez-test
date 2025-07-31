@@ -13,7 +13,7 @@ export default function ProductAndServices({ handleWorkshopChange }) {
                 <label className="block text-sm font-medium text-gray-700">
                     What products & services are you interested in? <span className="text-red-500">*</span>
                 </label>
-                <button className="bg-gradient-to-r from-[#AB0202] to-[#240102] text-white px-4 py-1 rounded text-sm font-medium" onClick={() => setIsOpen(!isOpen)}>
+                <button type='button' className="bg-gradient-to-r from-[#AB0202] to-[#240102] text-white px-4 py-1 rounded text-sm font-medium" onClick={() => setIsOpen(!isOpen)}>
                     SELECT <span className='font-bold'>SOLUTIONS/PRODUCTS</span>
                 </button>
             </div>
