@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
@@ -13,7 +13,6 @@ import ErrorWarning from '../../../components/common/ErrorWarning';
 import { companyTypes, countries, countryDialData, industries, regions } from '../../datas/selectOptions';
 import { getFlagEmoji } from '../../helper-functions/helper';
 
-// ✅ Validation Schema
 const validationSchema = Yup.object({
   firstName: Yup.string().required('First name is required'),
   lastName: Yup.string().required('Last name is required'),
@@ -32,8 +31,13 @@ const validationSchema = Yup.object({
   mobileCountry: Yup.string().required('Mobile country code is required'),
 });
 
-export default function FormComponent({ attendee, step, handleNext, handlePrev }) {
+export default function FormComponent({ attendee, step, handleNext, handlePrev, tickets }) {
   const { dispatch } = useBooking();
+
+  const ticket = useMemo(
+    () => tickets.find(t => t.id === attendee.ticketId),
+    [attendee, tickets]
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -235,7 +239,7 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev }
             />
           </div>
         </div>
-        <Sidebox />
+        <Sidebox values={formik.values} ticket={ticket} step={step} />
       </div>
 
       {/* Footer Buttons */}
