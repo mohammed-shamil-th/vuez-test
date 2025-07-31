@@ -1,28 +1,49 @@
-import React from 'react'
+import { useBooking } from '../../../context/BookingContext';
 
-export default function ProductCardFooter({ index = 0 }) {
+
+
+export default function ProductCardFooter({ product }) {
+    const { dispatch, getCount } = useBooking();
+    const count = getCount(product.id);
+
     return (
         <div className="h-20 text-white py-4">
             <div className="w-full h-px bg-gradient-to-r from-white/90 to-transparent"></div>
 
-            {index === 0 ? <div className="flex items-center justify-between mt-4">
+            {product?.price > 0 ? <div className="flex items-center justify-between mt-4">
                 <div className="flex items-center gap-1">
                     <span className="font-bold text-[15.7px] leading-none">USD</span>
-                    <span className="font-bold text-[15.7px] leading-none line-through text-gray-500">43</span>
+                    <span className="font-bold text-[15.7px] leading-none line-through text-gray-500">{product?.price}</span>
                     <div className=" px-1 rounded font-bold text-[15.7px]  border-t" style={{ borderColor: '#BDBDBD', borderWidth: '0.5px' }}>
-                        32.5
+                        {product?.discountPrice}
                     </div>
                     <span className="text-white text-sm">Incl. 20% VAT</span>
                 </div>
 
                 <div className="flex items-center border border-white/30 rounded">
-                    <button className="w-8 h-8 flex items-center justify-center text-white border-r border-white/30 hover:bg-white/10">
+                    <button className="w-8 h-8 flex items-center justify-center text-white border-r border-white/30 hover:bg-white/10" onClick={() =>
+                        dispatch({
+                            type: "decrement",
+                            payload: {
+                                id: product?.id,
+                                title: product?.title,
+                                discountPrice: product?.discountPrice,
+                            },
+                        })
+                    } disabled={count === 0}>
                         -
                     </button>
                     <div className="w-10 h-8 flex items-center justify-center bg-white text-black font-bold">
-                        25
+                        {count}
                     </div>
-                    <button className="w-8 h-8 flex items-center justify-center text-white border-l border-white/30 hover:bg-white/10">
+                    <button className="w-8 h-8 flex items-center justify-center text-white border-l border-white/30 hover:bg-white/10" onClick={() => dispatch({
+                        type: "increment",
+                        payload: {
+                            id: product?.id,
+                            title: product?.title,
+                            discountPrice: product?.discountPrice,
+                        },
+                    })}>
                         +
                     </button>
                 </div>
