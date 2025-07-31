@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PopupHeader from "./PopupHeader";
 import PopupFooter from "./PopupFooter";
 
-export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsApplied, setIsOpen, selectedOptions, setSelectedOptions, formik }) {
+export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsOpen, selectedOptions, setSelectedOptions, formik }) {
   const [searchText, setSearchText] = useState("");
   const [isMain, setIsMain] = useState(true);
 
@@ -45,7 +45,6 @@ export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsApp
     }
     setIsOpen(false);
     setIsMain(true);
-    setIsApplied(true);
   };
 
   const handleCancel = () => {
@@ -84,33 +83,19 @@ export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsApp
           </div>
 
           {isMain ? <div className="max-h-72 overflow-y-auto">
-            {currentTicket?.mainCategory?.map((option) => (
-              <label
-                key={option.id}
-                className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
-              >
-                <input
-                  type="checkbox"
-                  checked={formik.values.mainCategories.includes(option.id)}
-                  onChange={(e) => handleMainCategories(option?.id, e.target.checked)}
-                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
-                />
-                <span className="text-gray-700 text-sm flex-1">
-                  {option.name}
-                </span>
-              </label>
-            ))}
-          </div> :
-            <div className="grid grid-cols-2 gap-x-6 max-h-72 overflow-y-auto">
-              {currentTicket?.subCategory?.map((option) => (
+            {currentTicket?.mainCategory
+              ?.filter(option =>
+                option.name.toLowerCase().includes(searchText.toLowerCase())
+              )
+              .map((option) => (
                 <label
                   key={option.id}
                   className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
                 >
                   <input
                     type="checkbox"
-                    checked={formik.values.subCategories.includes(option.id)}
-                    onChange={(e) => handleSubCategories(option?.id, e.target.checked)}
+                    checked={formik.values.mainCategories.includes(option.id)}
+                    onChange={(e) => handleMainCategories(option?.id, e.target.checked)}
                     className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                   />
                   <span className="text-gray-700 text-sm flex-1">
@@ -118,6 +103,28 @@ export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsApp
                   </span>
                 </label>
               ))}
+          </div> :
+            <div className="grid grid-cols-2 gap-x-6 max-h-72 overflow-y-auto">
+              {currentTicket?.subCategory
+                ?.filter(option =>
+                  option.name.toLowerCase().includes(searchText.toLowerCase())
+                )
+                .map((option) => (
+                  <label
+                    key={option.id}
+                    className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formik.values.subCategories.includes(option.id)}
+                      onChange={(e) => handleSubCategories(option?.id, e.target.checked)}
+                      className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                    />
+                    <span className="text-gray-700 text-sm flex-1">
+                      {option.name}
+                    </span>
+                  </label>
+                ))}
             </div>
           }
         </div>

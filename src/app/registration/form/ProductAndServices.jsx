@@ -7,7 +7,6 @@ import ErrorWarning from '../../../components/common/ErrorWarning';
 export default function ProductAndServices({ selectedWorkshops, handleWorkshopChange, ticket, formik }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
-    const [isApplied, setIsApplied] = useState(false);
 
     const currentTicket = tickets.find(t => t.id === ticket?.id);
 
@@ -16,12 +15,12 @@ export default function ProductAndServices({ selectedWorkshops, handleWorkshopCh
             <div className="flex flex-wrap gap-3 items-center justify-between mb-4">
                 <label className="block text-sm font-medium text-gray-700">
                     What products & services are you interested in? <span className="text-red-500">*</span>
-                       {formik?.errors?.mainCategories && formik?.touched?.mainCategories && <span><ErrorWarning error={formik?.errors?.mainCategories} /></span>}
+                    {formik?.errors?.mainCategories && formik?.touched?.mainCategories && <span><ErrorWarning error={formik?.errors?.mainCategories} /></span>}
                 </label>
                 <button type='button' className="bg-gradient-to-r from-[#AB0202] to-[#240102] text-white px-4 py-1 rounded text-sm font-medium" onClick={() => setIsOpen(!isOpen)}>
                     SELECT <span className='font-bold'>SOLUTIONS/PRODUCTS</span>
                 </button>
-             
+
             </div>
             {formik?.values.mainCategories?.length > 0 && <CategoriesComponent ticket={currentTicket} values={formik.values} />}
             <div className="mb-4">
@@ -50,7 +49,6 @@ export default function ProductAndServices({ selectedWorkshops, handleWorkshopCh
             {isOpen &&
                 <SolutionsProductsPopup
                     currentTicket={currentTicket}
-                    setIsApplied={setIsApplied}
                     isOpen={isOpen}
                     setIsOpen={setIsOpen}
                     setSelectedOptions={setSelectedOptions}

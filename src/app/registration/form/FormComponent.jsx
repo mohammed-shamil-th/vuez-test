@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import FormHeader from './FormHeader';
 import TextBox from '../../../components/common/TextBox';
 import SelectBox from '../../../components/common/SelectBox';
