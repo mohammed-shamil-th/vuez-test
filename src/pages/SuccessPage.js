@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import HeaderLayout from '../components/common/HeaderLayout';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../components/common/FormButton';
+import { useBooking } from '../context/BookingContext';
 
 export default function SuccessPage() {
+    const { dispatch } = useBooking();
+
+    useEffect(() => {
+        dispatch({ type: "reset" });
+    }, [])
+
     const navigate = useNavigate();
     return (
         <div className='h-screen flex flex-col bg-gradient-to-b from-green-50 to-green-100'>

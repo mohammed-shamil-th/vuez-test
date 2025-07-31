@@ -75,7 +75,10 @@ function reducer(state, action) {
                         : t
                 ),
             };
-
+        }
+        
+        case "reset": {
+            return initialState;
         }
 
         default:

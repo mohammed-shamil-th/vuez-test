@@ -39,7 +39,7 @@ export default function RegistationPage() {
         {step <= attendees.length ? (
           <FormComponent attendee={attendees[step - 1]} step={step} handleNext={handleNext} handlePrev={handlePrev} />
         ) : (
-          <RegistrationSummary />
+          <RegistrationSummary tickets={tickets} handlePrev={handlePrev} step={step} />
         )}
       </div>
     </div>
