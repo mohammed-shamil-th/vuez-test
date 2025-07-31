@@ -5,6 +5,7 @@ export default function PopupFooter({ handleCancel, handleApply }) {
     return (
         <div className="px-6 py-4 bg-gray-50 flex justify-end space-x-3">
             <button
+                type='button'
                 onClick={handleCancel}
                 className="px-6 py-2 border border-black text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
             >

@@ -11,12 +11,12 @@ export default function PromoCodeApplied({ promoCode, handleRemovePromo }) {
                             <span className="text-md font-bold text-green-600">{promoCode}</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                            <span className="text-md font-bold text-gray-800 mr-2">Promo code applied:</span>
+                            <span className="text-md font-bold text-gray-800 mr-2">Discount applied:</span>
                             <span className="text-md font-bold text-green-600">15% (EUR 0.06 incl. VAT)</span>
                         </div>
                         <div className="flex items-center space-x-2">
                             <span className="text-md font-bold text-gray-800 mr-2">Applied to:</span>
-                            <span className="text-md font-bold text-green-600">2 lowest-priced tickets</span>
+                            <span className="text-md font-bold text-green-600">All tickets</span>
                         </div>
                     </div>
 

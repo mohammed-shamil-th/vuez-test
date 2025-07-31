@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProgressBar from './ProgressBar';
-import FormButton from '../../components/common/FormButton';
 import FormComponent from './form/FormComponent';
 import RegistrationSummary from './summary/RegistrationSummary';
 import { useNavigate } from 'react-router-dom';
 import { useBooking } from '../../context/BookingContext';
-import FormFooterButtons from './form/FormFooterButtons';
 
 export default function RegistationPage() {
   const [step, setStep] = useState(1);
@@ -32,12 +30,18 @@ export default function RegistationPage() {
     }
   };
 
+  useEffect(() => {
+    if (tickets?.length === 0) {
+      navigagte('/');
+    }
+  }, [])
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 p-4 font-alexandria">
       <div className="max-w-[1600px] mx-auto">
         <ProgressBar currentStep={step} totalSteps={totalSteps} />
         {step <= attendees.length ? (
-          <FormComponent attendee={attendees[step - 1]} step={step} handleNext={handleNext} handlePrev={handlePrev} tickets={tickets}/>
+          <FormComponent attendee={attendees[step - 1]} step={step} handleNext={handleNext} handlePrev={handlePrev} tickets={tickets} />
         ) : (
           <RegistrationSummary tickets={tickets} handlePrev={handlePrev} step={step} />
         )}

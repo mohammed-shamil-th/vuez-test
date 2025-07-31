@@ -9,7 +9,7 @@ export default function ProductCard({ product, index }) {
         <div className='relative'>
             {product?.badge && <CardBadge badge={product?.badge} />}
             <div
-                className="product-card rounded-3xl overflow-hidden relative flex flex-col "
+                className="product-card rounded-3xl overflow-hidden relative"
                 style={{
                     backgroundImage: `${product?.bgImg}`,
                     backgroundSize: 'cover',
@@ -17,7 +17,9 @@ export default function ProductCard({ product, index }) {
                 }}
             >
                 <ProductCardHeader product={product} />
-                <ProductCardContent index={index} product={product} />
+                <div className="flex-1 overflow-y-auto">
+                    <ProductCardContent index={index} product={product} />
+                </div>
                 <Round position='left' />
                 <Round position='right' />
 

@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import FormHeader from './FormHeader';
 import TextBox from '../../../components/common/TextBox';
 import SelectBox from '../../../components/common/SelectBox';
@@ -29,6 +28,10 @@ const validationSchema = Yup.object({
   companyType: Yup.string().required('Company type is required'),
   industry: Yup.string().required('Industry is required'),
   mobileCountry: Yup.string().required('Mobile country code is required'),
+  mainCategories: Yup.array()
+    .min(1, 'Please select at least one main category'),
+  subCategories: Yup.array()
+    .min(1, 'Please select at least one sub category')
 });
 
 export default function FormComponent({ attendee, step, handleNext, handlePrev, tickets }) {
@@ -53,8 +56,11 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
       jobTitle: attendee?.jobTitle || '',
       companyType: attendee?.companyType || '',
       industry: attendee?.industry || '',
-      workshops: attendee?.workshops || [],
       mobileCountry: attendee?.mobileCountry || "+91",
+      workshops: attendee?.workshops || [],
+      mainCategories: attendee?.mainCategories || [],
+      subCategories: attendee?.subCategories || [],
+
     },
     validationSchema,
     enableReinitialize: true,
@@ -72,10 +78,15 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
     },
   });
 
-  const handleWorkshopChange = (workshop, checked) => {
+  const handleWorkshopChange = (id, checked) => {
+    const existingWorkshops = formik.values.workshops || [];
+    if (existingWorkshops?.length >= 6 && checked) {
+      alert('You can select a maximum of 6 workshops.');
+      return;
+    }
     const newWorkshops = checked
-      ? [...formik.values.workshops, workshop]
-      : formik.values.workshops.filter((w) => w !== workshop);
+      ? [...existingWorkshops, id]
+      : existingWorkshops.filter((w) => w !== id);
     formik.setFieldValue('workshops', newWorkshops);
   };
 
@@ -236,6 +247,8 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
             <ProductAndServices
               handleWorkshopChange={handleWorkshopChange}
               selectedWorkshops={formik.values.workshops}
+              ticket={ticket}
+              formik={formik}
             />
           </div>
         </div>

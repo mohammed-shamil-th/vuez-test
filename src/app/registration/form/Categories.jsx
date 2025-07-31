@@ -1,16 +1,9 @@
 
-export default function CategoriesComponent() {
+export default function CategoriesComponent({ ticket, values }) {
 
-    const mainCategories = [
-        "Artificial Intelligence & Robotics",
-        "Artificial Intelligence & Robotics",
-    ];
+    const mainCategories = ticket?.mainCategory?.filter(category => values.mainCategories.includes(category.id)) || [];
 
-    const subCategories = [
-        "Edge Computing",
-        "Cloud Computing",
-        "Cognitive Computing",
-    ];
+    const subCategories = ticket?.subCategory?.filter(category => values.subCategories.includes(category.id)) || [];
 
     return (
         <div className="mb-6">
@@ -20,11 +13,12 @@ export default function CategoriesComponent() {
                 <div className="flex flex-wrap gap-3">
                     {mainCategories.map((category) => (
                         <button
-                            key={category}
+                            type="button"
+                            key={category?.id}
                             className="px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 text-white"
                             style={{ background: '#5E3169' }}
                         >
-                            {category}
+                            {category?.name}
                         </button>
                     ))}
                 </div>
@@ -36,12 +30,13 @@ export default function CategoriesComponent() {
                 <div className="flex flex-wrap gap-3">
                     {subCategories.map((category) => (
                         <button
-                            key={category}
+                            type="button"
+                            key={category?.id}
                             className="px-4 py-2 rounded-full text-sm font-medium border text-gray-700
                                 bg-gray-600 border-gray-700"
                             style={{ background: '#F5F5F5' }}
                         >
-                            {category}
+                            {category?.name}
                         </button>
                     ))}
                 </div>

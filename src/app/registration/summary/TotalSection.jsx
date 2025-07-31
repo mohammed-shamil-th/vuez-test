@@ -1,5 +1,4 @@
 import React from 'react'
-import FormButton from '../../../components/common/FormButton'
 import { formatToOneDecimal } from '../../helper-functions/helper'
 
 export default function TotalSection({ promocodeCodeApplied, totalAmount, totalDiscount }) {
