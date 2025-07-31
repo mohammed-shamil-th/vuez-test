@@ -16,6 +16,7 @@ export default function ProductAndServices({ selectedWorkshops, handleWorkshopCh
                 <label className="block text-sm font-medium text-gray-700">
                     What products & services are you interested in? <span className="text-red-500">*</span>
                     {formik?.errors?.mainCategories && formik?.touched?.mainCategories && <span><ErrorWarning error={formik?.errors?.mainCategories} /></span>}
+                    {formik?.errors?.subCategories && formik?.touched?.subCategories && <span><ErrorWarning error={formik?.errors?.subCategories} /></span>}
                 </label>
                 <button type='button' className="bg-gradient-to-r from-[#AB0202] to-[#240102] text-white px-4 py-1 rounded text-sm font-medium" onClick={() => setIsOpen(!isOpen)}>
                     SELECT <span className='font-bold'>SOLUTIONS/PRODUCTS</span>

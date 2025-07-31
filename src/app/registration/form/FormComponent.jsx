@@ -29,7 +29,9 @@ const validationSchema = Yup.object({
   industry: Yup.string().required('Industry is required'),
   mobileCountry: Yup.string().required('Mobile country code is required'),
   mainCategories: Yup.array()
-    .min(1, 'Please select at least one product or service')
+    .min(1, 'Please select at least one main category'),
+  subCategories: Yup.array()
+    .min(1, 'Please select at least one sub category')
 });
 
 export default function FormComponent({ attendee, step, handleNext, handlePrev, tickets }) {
@@ -58,7 +60,7 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
       workshops: attendee?.workshops || [],
       mainCategories: attendee?.mainCategories || [],
       subCategories: attendee?.subCategories || [],
-      
+
     },
     validationSchema,
     enableReinitialize: true,

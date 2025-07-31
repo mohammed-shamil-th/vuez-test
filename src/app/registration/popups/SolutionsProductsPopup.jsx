@@ -5,6 +5,10 @@ import PopupFooter from "./PopupFooter";
 export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsOpen, selectedOptions, setSelectedOptions, formik }) {
   const [searchText, setSearchText] = useState("");
   const [isMain, setIsMain] = useState(true);
+  const [categories, setCategories] = useState({
+    mainCategories: [],
+    subCategories: []
+  });
 
   const handleMainCategories = (id, checked) => {
     const existingCategories = formik.values.mainCategories || [];
@@ -52,11 +56,20 @@ export default function SolutionsProductsPopup({ currentTicket, isOpen, setIsOpe
       setIsOpen(false);
     };
     setIsMain((prev) => !prev);
-    setSelectedOptions([]);
+    formik.setFieldValue('mainCategories', categories.mainCategories);
+    formik.setFieldValue('subCategories', categories.subCategories);
+    setSearchText('');
+    setCategories({
+      mainCategories: [],
+      subCategories: []
+    });
   };
 
   useEffect(() => {
-    setSelectedOptions([]);
+    setCategories({
+      mainCategories: formik?.values?.mainCategories || [],
+      subCategories: formik?.values?.subCategories || []
+    })
   }, [isOpen])
 
   return (
