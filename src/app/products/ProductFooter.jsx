@@ -6,6 +6,14 @@ export default function ProductFooter() {
     const navigate = useNavigate();
     const { getTotal } = useBooking();
     const total = getTotal();
+
+    function handleBuyNow() {
+        if (total <= 0) {
+            alert('Please select a ticket before proceeding.');
+            return;
+        }
+        navigate('/registration');
+    }
     return (
         <div className="h-[120px] bg-gradient-to-r from-[#299D3F] to-[#123F22] flex items-center justify-end gap-20 px-4 sm:px-8 lg:px-20">
             <div className="text-white">
@@ -23,7 +31,7 @@ export default function ProductFooter() {
                 <button
                     className="bg-white text-gray-800 font-semibold px-6 sm:px-8 py-2 sm:py-3 rounded-lg 
                  hover:bg-gray-100 transition-colors text-sm sm:text-base"
-                    onClick={() => navigate('/registration')}
+                    onClick={handleBuyNow}
                 >
                     Buy Now
                 </button>
