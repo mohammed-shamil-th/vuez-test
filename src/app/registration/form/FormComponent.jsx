@@ -94,7 +94,7 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
     <form key={step} onSubmit={formik.handleSubmit}>
       <div className="flex flex-col items-center md:flex-row md:items-start gap-6">
         <div className="flex-1 bg-white rounded-lg shadow-lg overflow-hidden">
-          <FormHeader step={step} />
+          <FormHeader step={step} ticket={ticket}/>
           <div className="p-6">
             <div className="grid grid-cols lg:grid-cols-2 gap-6 mb-6">
 
