@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useBooking } from '../../context/BookingContext';
+import Popup from '../../components/common/Popup';
 
 export default function ProductFooter() {
+    const [open, setOpen] = useState(false)
     const navigate = useNavigate();
-    const { getTotal } = useBooking();
+    const { getTotal, state } = useBooking();
     const total = getTotal();
 
     function handleBuyNow() {
@@ -22,7 +24,7 @@ export default function ProductFooter() {
                     <span className="text-xl sm:text-3xl font-bold">EUR {total}</span>
                     <span className="text-xs sm:text-sm opacity-80">Incl. 19% VAT</span>
                 </div>
-                <div className="text-xs sm:text-sm opacity-80">
+                <div className="text-xs sm:text-sm opacity-80 cursor-pointer" onClick={() => { setOpen(true) }}>
                     View Ticket summary
                 </div>
             </div>
@@ -36,6 +38,7 @@ export default function ProductFooter() {
                     Buy Now
                 </button>
             </div>
+            {open && <Popup handleCancel={() => { setOpen(false) }} tickets={state?.tickets} />}
         </div>
 
 
