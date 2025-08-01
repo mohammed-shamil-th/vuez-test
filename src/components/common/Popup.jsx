@@ -6,7 +6,7 @@ import FormButton from './FormButton'
 export default function Popup({ handleCancel, tickets }) {
     return (
         <div className="font-poppins fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden">
+            <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full min-h-[50%] max-h-[85vh] flex flex-col overflow-hidden">
 
                 {/* Header */}
                 <PopupHeader handleCancel={handleCancel} title="Your Tickets Summary" />
