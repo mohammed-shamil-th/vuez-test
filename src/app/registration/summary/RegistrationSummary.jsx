@@ -76,7 +76,7 @@ export default function RegistrationSummary({ tickets, handlePrev, step }) {
                                 disabled={promoCodeApplied} />
                             <button
                                 onClick={handleApplyPromo}
-                                className="bg-gradient-to-r from-[#AB0202] to-[#240102] text-white px-4 py-1 rounded text-sm font-bold"
+                                className="bg-gradient-to-r from-[#AB0202] to-[#240102] text-white px-4 py-2 rounded text-sm font-bold"
                                 disabled={promoCodeApplied}
                             >
                                 APPLY
