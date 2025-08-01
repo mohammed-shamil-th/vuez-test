@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import FormHeader from './FormHeader';
@@ -11,6 +11,7 @@ import FormFooterButtons from './FormFooterButtons';
 import ErrorWarning from '../../../components/common/ErrorWarning';
 import { companyTypes, countries, countryDialData, industries, regions } from '../../datas/selectOptions';
 import { getFlagEmoji } from '../../helper-functions/helper';
+import Popup from '../../../components/common/Popup';
 
 const validationSchema = Yup.object({
   firstName: Yup.string().required('First name is required'),
@@ -34,7 +35,8 @@ const validationSchema = Yup.object({
     .min(1, 'Please select at least one sub category')
 });
 
-export default function FormComponent({ attendee, step, handleNext, handlePrev, tickets, customer}) {
+export default function FormComponent({ attendee, step, handleNext, handlePrev, tickets, customer }) {
+  const [openTickets, setOpenTickets] = useState(false)
   const { dispatch } = useBooking();
 
   const ticket = useMemo(
@@ -90,173 +92,179 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
     formik.setFieldValue('workshops', newWorkshops);
   };
 
+  function openTicketsSummary() {
+    setOpenTickets(true)
+  }
   return (
-    <form key={step} onSubmit={formik.handleSubmit}>
-      <div className="flex flex-col items-center md:flex-row md:items-start gap-6">
-        <div className="flex-1 bg-white rounded-lg shadow-lg overflow-hidden">
-          <FormHeader step={step} ticket={ticket}/>
-          <div className="p-6">
-            <div className="grid grid-cols lg:grid-cols-2 gap-6 mb-6">
+    <>
+      <form key={step} onSubmit={formik.handleSubmit}>
+        <div className="flex flex-col items-center md:flex-row md:items-start gap-6">
+          <div className="flex-1 bg-white rounded-lg shadow-lg overflow-hidden">
+            <FormHeader step={step} ticket={ticket} openTicketsSummary={openTicketsSummary}/>
+            <div className="p-6">
+              <div className="grid grid-cols lg:grid-cols-2 gap-6 mb-6">
 
-              {/* First Name */}
-              <TextBox
-                label="First name"
-                name="firstName"
-                value={formik.values.firstName}
-                onChange={formik.handleChange}
-                error={formik.touched.firstName && formik.errors.firstName}
-                required
-              />
+                {/* First Name */}
+                <TextBox
+                  label="First name"
+                  name="firstName"
+                  value={formik.values.firstName}
+                  onChange={formik.handleChange}
+                  error={formik.touched.firstName && formik.errors.firstName}
+                  required
+                />
 
-              {/* Last Name */}
-              <TextBox
-                label="Last name"
-                name="lastName"
-                value={formik.values.lastName}
-                onChange={formik.handleChange}
-                error={formik.touched.lastName && formik.errors.lastName}
-                required
-              />
+                {/* Last Name */}
+                <TextBox
+                  label="Last name"
+                  name="lastName"
+                  value={formik.values.lastName}
+                  onChange={formik.handleChange}
+                  error={formik.touched.lastName && formik.errors.lastName}
+                  required
+                />
 
-              {/* Country */}
-              <SelectBox
-                label="Country of residence"
-                name="country"
-                value={formik.values.country}
-                options={countries}
-                onChange={value => formik.setFieldValue('country', value)}
-                error={formik.touched.country && formik.errors.country}
-                required
-              />
+                {/* Country */}
+                <SelectBox
+                  label="Country of residence"
+                  name="country"
+                  value={formik.values.country}
+                  options={countries}
+                  onChange={value => formik.setFieldValue('country', value)}
+                  error={formik.touched.country && formik.errors.country}
+                  required
+                />
 
-              {/* Region */}
-              <SelectBox
-                label="Region"
-                name="region"
-                value={formik.values.region}
-                options={regions}
-                onChange={value => formik.setFieldValue('region', value)}
-              />
+                {/* Region */}
+                <SelectBox
+                  label="Region"
+                  name="region"
+                  value={formik.values.region}
+                  options={regions}
+                  onChange={value => formik.setFieldValue('region', value)}
+                />
 
-              {/* Email */}
-              <TextBox
-                label="Email address"
-                name="email"
-                type="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                error={formik.touched.email && formik.errors.email}
-                required
-              />
+                {/* Email */}
+                <TextBox
+                  label="Email address"
+                  name="email"
+                  type="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  error={formik.touched.email && formik.errors.email}
+                  required
+                />
 
-              {/* Confirm Email */}
-              <TextBox
-                label="Confirm Email address"
-                name="confirmEmail"
-                type="email"
-                value={formik.values.confirmEmail}
-                onChange={formik.handleChange}
-                error={formik.touched.confirmEmail && formik.errors.confirmEmail}
-                required
-              />
+                {/* Confirm Email */}
+                <TextBox
+                  label="Confirm Email address"
+                  name="confirmEmail"
+                  type="email"
+                  value={formik.values.confirmEmail}
+                  onChange={formik.handleChange}
+                  error={formik.touched.confirmEmail && formik.errors.confirmEmail}
+                  required
+                />
 
-              {/* Nationality */}
-              <SelectBox
-                label="Nationality"
-                name="nationality"
-                value={formik.values.nationality}
-                options={countries}
-                onChange={value => formik.setFieldValue('nationality', value)}
-              />
+                {/* Nationality */}
+                <SelectBox
+                  label="Nationality"
+                  name="nationality"
+                  value={formik.values.nationality}
+                  options={countries}
+                  onChange={value => formik.setFieldValue('nationality', value)}
+                />
 
-              {/* Mobile Number */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Mobile number <span className="text-red-500">*</span>
-                </label>
-                <div className="flex">
-                  <select
-                    className='flex items-center px-2 sm:px-3 py-2 border border-gray-300 rounded-md bg-gray-50 mr-2'
-                    name="mobileCountry"
-                    value={formik.values.mobileCountry}
-                    onChange={e => formik.setFieldValue("mobileCountry", e.target.value)}
-                  >
-                    {countryDialData.map((c) => (
-                      <option key={c.iso} value={c.dialCode}>
-                        {getFlagEmoji(c.iso)} {c.dialCode}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="tel"
-                    name="mobile"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    value={formik.values.mobile}
-                    onChange={formik.handleChange}
-                  />
+                {/* Mobile Number */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Mobile number <span className="text-red-500">*</span>
+                  </label>
+                  <div className="flex">
+                    <select
+                      className='flex items-center px-2 sm:px-3 py-2 border border-gray-300 rounded-md bg-gray-50 mr-2'
+                      name="mobileCountry"
+                      value={formik.values.mobileCountry}
+                      onChange={e => formik.setFieldValue("mobileCountry", e.target.value)}
+                    >
+                      {countryDialData.map((c) => (
+                        <option key={c.iso} value={c.dialCode}>
+                          {getFlagEmoji(c.iso)} {c.dialCode}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="tel"
+                      name="mobile"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      value={formik.values.mobile}
+                      onChange={formik.handleChange}
+                    />
+                  </div>
+                  {formik.touched.mobile && formik.errors.mobile && (
+                    <ErrorWarning error={formik.errors.mobile} />
+                  )}
                 </div>
-                {formik.touched.mobile && formik.errors.mobile && (
-                  <ErrorWarning error={formik.errors.mobile} />
-                )}
+
+                {/* Company Name */}
+                <TextBox
+                  label="Company name"
+                  name="companyName"
+                  value={formik.values.companyName}
+                  onChange={formik.handleChange}
+                  error={formik.touched.companyName && formik.errors.companyName}
+                  required
+                />
+
+                {/* Job Title */}
+                <TextBox
+                  label="Job title"
+                  name="jobTitle"
+                  value={formik.values.jobTitle}
+                  onChange={formik.handleChange}
+                  error={formik.touched.jobTitle && formik.errors.jobTitle}
+                  required
+                />
+
+                {/* Company Type */}
+                <SelectBox
+                  label="Company type"
+                  name="companyType"
+                  value={formik.values.companyType}
+                  options={companyTypes}
+                  onChange={value => formik.setFieldValue('companyType', value)}
+                  error={formik.touched.companyType && formik.errors.companyType}
+                  required
+                />
+
+                {/* Industry */}
+                <SelectBox
+                  label="Industry"
+                  name="industry"
+                  value={formik.values.industry}
+                  options={industries}
+                  onChange={value => formik.setFieldValue('industry', value)}
+                  error={formik.touched.industry && formik.errors.industry}
+                  required
+                />
               </div>
 
-              {/* Company Name */}
-              <TextBox
-                label="Company name"
-                name="companyName"
-                value={formik.values.companyName}
-                onChange={formik.handleChange}
-                error={formik.touched.companyName && formik.errors.companyName}
-                required
-              />
-
-              {/* Job Title */}
-              <TextBox
-                label="Job title"
-                name="jobTitle"
-                value={formik.values.jobTitle}
-                onChange={formik.handleChange}
-                error={formik.touched.jobTitle && formik.errors.jobTitle}
-                required
-              />
-
-              {/* Company Type */}
-              <SelectBox
-                label="Company type"
-                name="companyType"
-                value={formik.values.companyType}
-                options={companyTypes}
-                onChange={value => formik.setFieldValue('companyType', value)}
-                error={formik.touched.companyType && formik.errors.companyType}
-                required
-              />
-
-              {/* Industry */}
-              <SelectBox
-                label="Industry"
-                name="industry"
-                value={formik.values.industry}
-                options={industries}
-                onChange={value => formik.setFieldValue('industry', value)}
-                error={formik.touched.industry && formik.errors.industry}
-                required
+              {/* Workshops */}
+              <ProductAndServices
+                handleWorkshopChange={handleWorkshopChange}
+                selectedWorkshops={formik.values.workshops}
+                ticket={ticket}
+                formik={formik}
               />
             </div>
-
-            {/* Workshops */}
-            <ProductAndServices
-              handleWorkshopChange={handleWorkshopChange}
-              selectedWorkshops={formik.values.workshops}
-              ticket={ticket}
-              formik={formik}
-            />
           </div>
+          <Sidebox values={formik.values} ticket={ticket} step={step} />
         </div>
-        <Sidebox values={formik.values} ticket={ticket} step={step} />
-      </div>
 
-      {/* Footer Buttons */}
-      <FormFooterButtons step={step} handleNext={formik.handleSubmit} handlePrev={handlePrev} />
-    </form>
+        {/* Footer Buttons */}
+        <FormFooterButtons step={step} handleNext={formik.handleSubmit} handlePrev={handlePrev} />
+      </form>
+      {openTickets && <Popup tickets={tickets} handleCancel={() => { setOpenTickets(false) }} />}
+    </>
   );
 }
