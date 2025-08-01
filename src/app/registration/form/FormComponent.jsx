@@ -34,7 +34,7 @@ const validationSchema = Yup.object({
     .min(1, 'Please select at least one sub category')
 });
 
-export default function FormComponent({ attendee, step, handleNext, handlePrev, tickets }) {
+export default function FormComponent({ attendee, step, handleNext, handlePrev, tickets, customer}) {
   const { dispatch } = useBooking();
 
   const ticket = useMemo(
@@ -44,19 +44,19 @@ export default function FormComponent({ attendee, step, handleNext, handlePrev, 
 
   const formik = useFormik({
     initialValues: {
-      firstName: attendee?.firstName || '',
-      lastName: attendee?.lastName || '',
-      country: attendee?.country || '',
-      region: attendee?.region || '',
-      email: attendee?.email || '',
-      confirmEmail: attendee?.confirmEmail || '',
-      nationality: attendee?.nationality || '',
-      mobile: attendee?.mobile || '',
-      companyName: attendee?.companyName || '',
-      jobTitle: attendee?.jobTitle || '',
-      companyType: attendee?.companyType || '',
-      industry: attendee?.industry || '',
-      mobileCountry: attendee?.mobileCountry || "+91",
+      firstName: customer?.firstName || '',
+      lastName: customer?.lastName || '',
+      country: customer?.country || '',
+      region: customer?.region || '',
+      email: customer?.email || '',
+      confirmEmail: customer?.confirmEmail || '',
+      nationality: customer?.nationality || '',
+      mobile: customer?.mobile || '',
+      companyName: customer?.companyName || '',
+      jobTitle: customer?.jobTitle || '',
+      companyType: customer?.companyType || '',
+      industry: customer?.industry || '',
+      mobileCountry: customer?.mobileCountry || "+91",
       workshops: attendee?.workshops || [],
       mainCategories: attendee?.mainCategories || [],
       subCategories: attendee?.subCategories || [],
