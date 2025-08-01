@@ -17,7 +17,7 @@ export default function ProductCardFooter({ product }) {
                     <div className=" px-1 rounded font-bold text-[15.7px]  border-t" style={{ borderColor: '#BDBDBD', borderWidth: '0.5px' }}>
                         {product?.discountPrice}
                     </div>
-                    <span className="text-white text-sm">Incl. 20% VAT</span>
+                    <span className="text-white text-sm">Incl. 19% VAT</span>
                 </div>
 
                 <div className="flex items-center border border-white/30 rounded">
