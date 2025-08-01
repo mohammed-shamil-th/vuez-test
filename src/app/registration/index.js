@@ -9,6 +9,8 @@ export default function RegistationPage() {
   const [step, setStep] = useState(1);
   const { state } = useBooking()
   const tickets = state?.tickets || [];
+  const customer = state.customer;
+
   const attendees = tickets.flatMap(ticket =>
     ticket.attendees.map(att => ({ ...att, ticketId: ticket.id }))
   );
@@ -41,7 +43,7 @@ export default function RegistationPage() {
       <div className="max-w-[1600px] mx-auto">
         <ProgressBar currentStep={step} totalSteps={totalSteps} />
         {step <= attendees.length ? (
-          <FormComponent attendee={attendees[step - 1]} step={step} handleNext={handleNext} handlePrev={handlePrev} tickets={tickets} />
+          <FormComponent attendee={attendees[step - 1]} step={step} handleNext={handleNext} handlePrev={handlePrev} tickets={tickets} customer={customer} />
         ) : (
           <RegistrationSummary tickets={tickets} handlePrev={handlePrev} step={step} />
         )}

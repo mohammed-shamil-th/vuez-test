@@ -62,6 +62,7 @@ function reducer(state, action) {
         case "updateAttendee": {
             return {
                 ...state,
+                customer: setCustomerInfo(action?.payload?.values),
                 tickets: state.tickets.map(t =>
                     t.id === action.payload.ticketId
                         ? {
@@ -76,13 +77,31 @@ function reducer(state, action) {
                 ),
             };
         }
-        
+
         case "reset": {
             return initialState;
         }
 
         default:
             return state;
+    }
+}
+
+function setCustomerInfo(data) {
+    return {
+        firstName: data?.firstName || '',
+        lastName: data?.lastName || '',
+        country: data?.country || '',
+        region: data?.region || '',
+        email: data?.email || '',
+        confirmEmail: data?.confirmEmail || '',
+        nationality: data?.nationality || '',
+        mobile: data?.mobile || '',
+        companyName: data?.companyName || '',
+        jobTitle: data?.jobTitle || '',
+        companyType: data?.companyType || '',
+        industry: data?.industry || '',
+        mobileCountry: data?.mobileCountry || "+91",
     }
 }
 
